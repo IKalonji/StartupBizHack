@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar >
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div style="text-align: center;">
+    <ion-label>Transaction Details</ion-label>
+  </div>
+  <ion-card>
+    <ion-card-content>
+      <ion-label>{{data.seller}}</ion-label>
+      <ion-label>{{data.account}}</ion-label>
+      <ion-label>{{data.amount}}</ion-label>
+      <ion-label>{{data.description}}</ion-label>
+    </ion-card-content>
+  </ion-card>
+  <ion-button (click)="onClick()" expand="block" fill="outline" shape="round">
+    <ion-label>Confirm payment</ion-label>
+  </ion-button>
+</ion-content>

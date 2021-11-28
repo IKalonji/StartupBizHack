@@ -1,22 +1,21 @@
-<!-- <ion-header>
-  <ion-toolbar translucent>
-    <ion-title></ion-title>
-  </ion-toolbar>
-</ion-header> -->
+
 <ion-content>
   <div *ngIf="!showQRCode">
+    <br>
+    <div style="text-align: center;">
+      <ion-label style="font-size: medium;">Create transaction QR:</ion-label>
+    </div>
 
     <ion-card style="height: fit-content;">
-      <ion-card-header>
-        <ion-card-subtitle></ion-card-subtitle>
-        <ion-card-title>Cash-In @ Agent</ion-card-title>
-      </ion-card-header>
       <ion-card-content>
-        <ion-label>Please enter the cZAR value to cash in</ion-label>
-        <ion-item>
-          <ion-label position="floating">Enter amount</ion-label>
-          <ion-input [(ngClass)]="amount"></ion-input>
-        </ion-item>
+        <ion-label>Please enter the transaction details:</ion-label>
+        <br>
+        <div>
+          <ion-input [(ngClass)]="amount" placeholder="Enter amount"></ion-input>
+          <ion-input [(ngClass)]="description" placeholder="Description"></ion-input>
+        </div>
+          
+        
       </ion-card-content>
     </ion-card>
   
@@ -30,7 +29,7 @@
   <div style="text-align: center; height: 100%; width: 100%;" *ngIf="showQRCode">
     <ion-card>
       <ion-card-header>
-        <ion-card-subtitle>Allow agent to scan the QR Code</ion-card-subtitle>
+        <ion-card-subtitle>Export and add to online ads</ion-card-subtitle>
         <br>
         <ion-card-title>QR Code: </ion-card-title>
       </ion-card-header>
@@ -43,7 +42,9 @@
         </ngx-qrcode>
       </ion-card-content>
     </ion-card>
-    
+    <ion-button (click)="export()" expand="block" fill="outline" shape="">
+      <ion-label>Export</ion-label>
+    </ion-button>
   
   </div>
 
