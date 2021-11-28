@@ -1,6 +1,8 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ToastController } from '@ionic/angular';
+import { toastController } from '@ionic/core';
 
 
 @Component({
@@ -11,7 +13,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 export class ScanPaymentComponent implements OnInit {
   
 
-  constructor(private barcodeScanner: BarcodeScanner) { } //
+  constructor(private barcodeScanner: BarcodeScanner,
+    private toastController: ToastController) { } //
 
 
   data: any;
@@ -30,5 +33,14 @@ export class ScanPaymentComponent implements OnInit {
     }).catch(err => {
       console.log('Error', err);
     });
+  }
+
+  async onClick(){
+    let toast = await toastController.create(
+      {
+        header: "Success!",
+        message: "Payment completed and witheld"
+      }
+    )
   }
 }

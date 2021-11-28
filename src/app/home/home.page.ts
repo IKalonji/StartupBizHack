@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { HomePageCards } from '../models/home-cards.models';
 import { transactionCards } from '../models/transaction-cards.models';
@@ -14,7 +14,10 @@ import { catchError, retry } from 'rxjs/operators';
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage implements OnInit{
+export class HomePage implements OnInit, AfterViewInit{
+
+  @ViewChild('bal', {static: false}) bal : ElementRef;
+  @ViewChild('avail', {static: false}) avail : ElementRef;
 
   optionCardsFirstRow = HomePageCards.slice(0,3);
   optionCardsSecondRow = HomePageCards.slice(3,6);
@@ -26,14 +29,19 @@ export class HomePage implements OnInit{
 
   userAccount : string = ''
 
-  balance : string = '';
-  availableBalance : string = '';
+  balance: any;
+
+  available: any;
+  balanceData: any;
 
   constructor(
     private modalController: ModalController,
     private alertController: AlertController,
     private http: HttpClient
   ) {}
+
+  ngAfterViewInit(){
+  }
   
   ngOnInit(): void {
     this.setAccount();
@@ -87,52 +95,22 @@ export class HomePage implements OnInit{
             text: 'Account 1',
             handler: () => {
               this.userAccount = account1;
-              this.getBalances();
+              this.balance = 0
+              this.available = 0
             }
           }, {
             text: 'Account 2',
             handler: () => {
               this.userAccount = account2;
-              this.getBalances();
+              this.balance = 20
+              this.available = 20
             }
           }
         ]
       }
     )
+    
     await select.present();
   }
 
-  getBalances(){
-    return this.http.get<any>(`https://telkomhackpythonapi.herokuapp.com/balance/${this.userAccount}`).subscribe(data =>{
-      data = data
-      this.balance = data.balance
-      this.availableBalance = data.available
-      console.log(this.availableBalance);
-    })
-  }
-
 }
-
-// export const transactionCards = [
-//   {
-//     txId: 1234,
-//     type: "Payment",
-//     amount: 500,
-//     status: "Pending",
-//     buttonText: "Approve Payment"
-//   },
-//   {
-//     txId: 5678,
-//     type: "Receipt",
-//     amount: 200,
-//     status: "Completed",
-//     buttonText: false
-//   },
-//   {
-//     txId: 9101,
-//     type: "Receipt",
-//     amount: 350,
-//     status: "Awaiting Delivery",
-//     buttonText: "Start Delivery"
-//   },
-// ]
